@@ -15,8 +15,6 @@ def estimate_log_class_priors(data):
     :return log_class_priors: a numpy array of length two
     """
 
-    priors = data[:, 0]
-
     spam_no = np.sum(data[:, 0] == 0)
     ham_no = np.sum( data[:, 0] == 1)
     total_no = spam_no + ham_no
