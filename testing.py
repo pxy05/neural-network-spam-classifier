@@ -20,17 +20,22 @@ def estimate_log_class_conditional_likelihoods(data, alpha=1.0):
         to class j.
     """
 
-    spam = np.array(data[data[0] == 0])
-    ham = np.array(data[data[0] == 1])
+    spam = data[data[:, 0] == 0]
+    ham = data[data[:, 0] == 1]
+    spam = spam[:, 1:]
+    ham = ham[:, 1:]
 
-    spam_features = np.array([])
-    ham_features = np.array([])
+    spam_features_sum = spam.sum(axis=0) + alpha
+    ham_features_sum = ham.sum(axis=0) + alpha
 
+    spam_prob_denominator = spam.shape[0] + alpha
+    ham_prob_denominator = ham.shape[0] + alpha
 
-    spam_features = np.sum(spam[:1], axis=0)
-    ham_features = np.sum(ham[:1], axis=0)
+    spam_probs = np.log(spam_features_sum/ spam_prob_denominator)
+    ham_probs = np.log(ham_features_sum / ham_prob_denominator)
 
-    print ("Spam features:", spam_features)
-    print ("Ham features:", ham_features)
+    theta = np.array([spam_probs, ham_probs])
+            
+    return theta
 
 estimate_log_class_conditional_likelihoods(training_spam, alpha=1.0)
