@@ -17,7 +17,10 @@ def accuracy(predictions, true_classes):
     return np.mean(predictions == true_classes) * 100
 
 classifier = NN.spamClassifier()
-classifier.train(training_spam_X.T, training_spam_Y, iterations=1000, learning_rate=0.01, print_cost=True)
+classifier.load_weights("weights_and_biases/spam(93.2).npz")
+# classifier.train(training_spam_X.T, training_spam_Y, iterations=50000, learning_rate=0.01, print_cost=True)
 predictions = classifier.predict(testing_spam_X.T)
+
+
 
 print(f"Accuracy: {accuracy(predictions, testing_spam_Y):.2f}%")
